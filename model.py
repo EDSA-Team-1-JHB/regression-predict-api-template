@@ -26,7 +26,7 @@ import numpy as np
 import pandas as pd
 import pickle
 import json
-import category_encoders as ce
+from category_encoders import *
 from sklearn.decomposition import PCA
 from geopy.distance import vincenty
 
@@ -213,8 +213,8 @@ def _preprocess_data(data):
     X_test_order_no = test['order_no']
 
     #Feature Encoding
-    oce = ce.OneHotEncoder(cols=['platform_type','personal_or_business'])
-    hce = ce.TargetEncoder(cols=['rider_id'], smoothing = 40, min_samples_leaf = 7)
+    oce = OneHotEncoder(cols=['platform_type','personal_or_business'])
+    hce = TargetEncoder(cols=['rider_id'], smoothing = 40, min_samples_leaf = 7)
     X_test_data = oce.fit_transform(X_test_data)
     X_test_data = hce.fit_transform(X_test_data)
     X_test_data.drop('personal_or_business_2', axis=1, inplace=True)
